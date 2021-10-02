@@ -25,11 +25,33 @@ import model
 import csv
 
 
+FILE_ARTISTS = 'MoMa/Artists-utf8-small.csv'
+FILE_ARTWORKS = 'MoMa/Artworks-utf8-small.csv' 
+
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 """
 
 # Inicialización del Catálogo de libros
+
+def initCatalog():
+    catalog = model.newCatalog()
+    return catalog
+
+def load_artworks(map):
+    #artworkfile
+    awf = cf.data_dir + FILE_ARTWORKS
+    in_file = csv.DictReader(open(awf, encoding='utf-8'))
+    for artwork in in_file:
+        model.add_artwork(map, artwork)
+
+    
+def load_artists(map):
+    #artistfile
+    artf = cf.data_dir + FILE_ARTISTS
+    in_file = csv.DictReader(open(artf, encoding='utf-8'))
+    for artist in in_file:
+        model.add_artist(map, artist)
 
 # Funciones para la carga de datos
 

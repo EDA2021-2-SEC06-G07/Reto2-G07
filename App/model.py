@@ -25,12 +25,16 @@
  """
 
 
+from App.controller import initCatalog
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
+
+ARTISTAS = "Artistas"
+ARTWORKS = "Artworks"
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
@@ -39,6 +43,22 @@ los mismos.
 
 # Construccion de modelos
 
+def initCatalog():
+    catalog = {
+        cf.ARTWORKS: None,
+        cf.ARTISTS: None
+    }
+    catalog[cf.ARTISTS] = mp.newMap()
+    catalog[cf.ARTWORKS] = mp.newMap()
+    return catalog
+
+
+def add_artwork(map, artwork):
+    mp.put(map, int(artwork['ObjectID']), artwork)
+
+
+def add_artist(map, artist):
+    mp.put(map, artist['ConstituentID'], artist)
 # Funciones para agregar informacion al catalogo
 
 # Funciones para creacion de datos

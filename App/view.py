@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from typing import Container
 import config as cf
 import sys
 import controller
@@ -35,24 +36,30 @@ operación solicitada
 """
 
 def printMenu():
-    print("Bienvenido")
-    print("1- Cargar información en el catálogo")
-    print("2- ")
+    menu = """Bienvenido
+    0- Carga de datos
+    1- """
+    print(menu)
 
 catalog = None
 
 """
 Menu principal
 """
-while True:
-    printMenu()
-    inputs = input('Seleccione una opción para continuar\n')
-    if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
+if __name__ == "__main__:":
+    running = True
+    while running:
+        printMenu()
+        inputs = input('Seleccione una opción para continuar\n')
+        if int(inputs[0]) == 0:
+            print("Cargando información de los archivos ....")
+            catalog = controller.initCatalog()
+            print("Loading artists")
+            controller.load_artists(catalog[cf.ARTISTS])
+            print("Loading artworks")
+            controller.load_artworks(catalog[cf.ARTWORKS])
+        elif int(inputs[0]) == 1:
+            pass
 
-    elif int(inputs[0]) == 2:
-        pass
-
-    else:
-        sys.exit(0)
-sys.exit(0)
+        else:
+            running = False
