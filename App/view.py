@@ -25,6 +25,7 @@ import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
+from DISClib.ADT import map as mp
 assert cf
 
 
@@ -46,7 +47,7 @@ catalog = None
 """
 Menu principal
 """
-if __name__ == "__main__:":
+if __name__ == "__main__":
     running = True
     while running:
         printMenu()
@@ -56,8 +57,10 @@ if __name__ == "__main__:":
             catalog = controller.initCatalog()
             print("Loading artists")
             controller.load_artists(catalog[cf.ARTISTS])
+            print("loaded " + str(mp.size(catalog[cf.ARTISTS])) + " artists")
             print("Loading artworks")
             controller.load_artworks(catalog[cf.ARTWORKS])
+            print("loaded " + str(mp.size(catalog[cf.ARTWORKS])) + " artworks")
         elif int(inputs[0]) == 1:
             pass
 

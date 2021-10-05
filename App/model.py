@@ -43,7 +43,7 @@ los mismos.
 
 # Construccion de modelos
 
-def initCatalog():
+def newCatalog():
     catalog = {
         cf.ARTWORKS: None,
         cf.ARTISTS: None
