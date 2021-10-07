@@ -54,7 +54,11 @@ def load_artists(map):
         model.add_artist(map, artist)
 
 # Funciones para la carga de datos
+def GetDate(catalog,catalogo):
+    return model.add_dates(catalog,catalogo)
 
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+def get_date(catalog,año1,mes1,dia1):
+    return model.get_date(catalog,año1,mes1,dia1)

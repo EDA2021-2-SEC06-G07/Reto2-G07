@@ -39,7 +39,8 @@ operación solicitada
 def printMenu():
     menu = """Bienvenido
     0- Carga de datos
-    1- """
+    1- 
+    2-dswdwdww"""
     print(menu)
 
 catalog = None
@@ -62,6 +63,19 @@ if __name__ == "__main__":
             controller.load_artworks(catalog[cf.ARTWORKS])
             print("loaded " + str(mp.size(catalog[cf.ARTWORKS])) + " artworks")
         elif int(inputs[0]) == 1:
+            pass
+        elif int(inputs[0]) == 2:
+            print("Si va a escribir una fecha, omita los 0 antes de los numeros ")
+            año1 = int(input("Gregue el año de la fecha 1: "))
+            mes1 = int(input("Gregue el año de la fecha 1: "))
+            dia1 = int(input("Gregue el año de la fecha 1: "))
+            #año2 = int(input("Gregue el año de la fecha 2: "))
+            #mes2 = int(input("Gregue el año de la fecha 2: "))
+            #dia2 = int(input("Gregue el año de la fecha 2: "))
+            mapa= controller.get_date(controller.GetDate(catalog[cf.ARTWORKS],catalog['dates']),año1,mes1,dia1)
+            
+            print(mapa)
+
             pass
 
         else:

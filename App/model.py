@@ -31,6 +31,7 @@ from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
+import datetime
 assert cf
 
 ARTISTAS = "Artistas"
@@ -46,23 +47,63 @@ los mismos.
 def newCatalog():
     catalog = {
         cf.ARTWORKS: None,
-        cf.ARTISTS: None
+        cf.ARTISTS: None,
+        'dates':None
     }
     catalog[cf.ARTISTS] = mp.newMap()
     catalog[cf.ARTWORKS] = mp.newMap()
+    catalog['dates']= mp.newMap(600, maptype='PROBING',loadfactor=0.5)
     return catalog
 
 
 def add_artwork(map, artwork):
     mp.put(map, int(artwork['ObjectID']), artwork)
 
-
 def add_artist(map, artist):
     mp.put(map, artist['ConstituentID'], artist)
 # Funciones para agregar informacion al catalogo
+def add_dates(catalog,catalogo):
+    #catalog con los ARTWORKS
+    #catalogo es el mapa de las dates
+    years = catalogo
+    for i in range(0,lt.size(catalog)-1):
+        element= lt.getElement(catalog,i)
+        fecha=element['DateAcquired']
+        if (fecha != ''):
+            pubyear = fecha
+            pubyear= pubyear.split('-')
+            pubyear = datetime.date(float(pubyear[0]) ,float(pubyear[1]),float(pubyear[2]))
+            print(pubyear)
+        else:
+            pubyear = datetime.date(2020,8,9)
+        existyear = mp.contains(years, pubyear)
+        if existyear:
+            entry = mp.get(years, pubyear)
+            year = me.getValue(entry)
+        else:
+            year = newDate(pubyear)
+            mp.put(years, pubyear, year)
+        lt.addLast(year['dates'], element)
+    return years
+
+    
+def newDate(pubyear):
+    
+    entry = {'date': "", "ARTWORKS": None}
+    entry['date'] = pubyear
+    entry['ARTWORKS'] = lt.newList('SINGLE_LINKED')
+    return entry
+
+
 
 # Funciones para creacion de datos
-
+def get_date(catalog,año1,mes1,dia1):
+    date1=datetime.date(año1,mes1,dia1)
+    #date2=datetime.date(año2,mes2,dia2)
+    date=mp.get(catalog['dates'], date1)
+    if date:
+        return me.getValue(date)
+    return None
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
