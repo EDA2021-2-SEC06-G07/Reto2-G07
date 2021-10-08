@@ -63,7 +63,11 @@ if __name__ == "__main__":
             controller.load_artworks(catalog[cf.ARTWORKS])
             print("loaded " + str(mp.size(catalog[cf.ARTWORKS])) + " artworks")
         elif int(inputs[0]) == 1:
-            pass
+            first_year = int(input("Cual es el año inicial:"))
+            second_year = int(input("Cual es el año final"))
+            print("loadig artists between " + str(first_year) + " and " + str(second_year))
+
+            artists = controller.req1(catalog, first_year, second_year)
         elif int(inputs[0]) == 2:
             print("Si va a escribir una fecha, omita los 0 antes de los numeros ")
             año1 = int(input("Gregue el año de la fecha 1: "))
