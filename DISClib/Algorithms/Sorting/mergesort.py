@@ -59,7 +59,7 @@ def sort(lst, cmpfunction):
             elemi = lt.getElement(leftlist, i)
             elemj = lt.getElement(rightlist, j)
             """compara y ordena los elementos"""
-            if cmpfunction(elemj, elemi):   # caso estricto elemj < elemi
+            if cmpfunction(elemj, elemi) < 0:   # caso estricto elemj < elemi
                 lt.changeInfo(lst, k, elemj)
                 j += 1
             else:                            # caso elemi <= elemj

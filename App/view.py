@@ -26,6 +26,7 @@ import sys
 import controller
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
+from DISClib.DataStructures import linkedlistiterator as iter
 assert cf
 
 
@@ -62,12 +63,35 @@ if __name__ == "__main__":
             print("Loading artworks")
             controller.load_artworks(catalog[cf.ARTWORKS])
             print("loaded " + str(mp.size(catalog[cf.ARTWORKS])) + " artworks")
+
         elif int(inputs[0]) == 1:
             first_year = int(input("Cual es el año inicial:"))
-            second_year = int(input("Cual es el año final"))
+            second_year = int(input("Cual es el año final:"))
             print("loadig artists between " + str(first_year) + " and " + str(second_year))
 
-            artists = controller.req1(catalog, first_year, second_year)
+            artists = controller.req1(catalog[cf.ARTISTS], first_year, second_year)
+            size = mp.size(artists)
+            
+            print(f"Numero de artistas entre {first_year} y {second_year} : {size}")
+
+            print("Primeros 3:")
+            for i in range(1, 3):
+                print(f"  Nombre: {lt.getElement(artists, i)['DisplayName']}")
+                print(f"  Año de nacimiento: {lt.getElement(artists, i)['BeginDate']}")
+                print(f"  Año de fallecimiento: {lt.getElement(artists, i)['EndDate']}")
+                print(f"  Nacionalidad: {lt.getElement(artists, i)['Nationality']}")
+                print(f"  Genero: {lt.getElement(artists, i)['Gender']}")
+                print()
+            
+            print("Ultimos 3:")
+            for i in range(size - 3, size):
+                print(f"  Nombre: {lt.getElement(artists, i)['DisplayName']}")
+                print(f"  Año de nacimiento: {lt.getElement(artists, i)['BeginDate']}")
+                print(f"  Año de fallecimiento: {lt.getElement(artists, i)['EndDate']}")
+                print(f"  Nacionalidad: {lt.getElement(artists, i)['Nationality']}")
+                print(f"  Genero: {lt.getElement(artists, i)['Gender']}")
+                print()
+
         elif int(inputs[0]) == 2:
             print("Si va a escribir una fecha, omita los 0 antes de los numeros ")
             año1 = int(input("Gregue el año de la fecha 1: "))

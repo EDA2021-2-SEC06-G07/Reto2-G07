@@ -30,7 +30,9 @@ import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.Algorithms.Sorting import mergesort as ms
+from DISClib.Algorithms.Sorting import insertionsort as ins
 from DISClib.DataStructures import mapentry as me
+from DISClib.DataStructures import linkedlistiterator as iter
 from DISClib.Algorithms.Sorting import shellsort as sa
 import datetime
 assert cf
@@ -51,8 +53,8 @@ def newCatalog():
         cf.ARTISTS: None,
         'dates':None
     }
-    catalog[cf.ARTISTS] = mp.newMap(maptype == 'CHAINING')
-    catalog[cf.ARTWORKS] = mp.newMap(maptype == 'CHAINING')
+    catalog[cf.ARTISTS] = mp.newMap(maptype = 'CHAINING')
+    catalog[cf.ARTWORKS] = mp.newMap(maptype = 'CHAINING')
     catalog['dates']= mp.newMap(600, maptype='PROBING',loadfactor=0.5)
     return catalog
 
@@ -96,13 +98,17 @@ def newDate(pubyear):
     return entry
 
 def req1(catalog, year1, year2):
-    artistas = lt.newList()
-    for key in mp.keySet(catalog[cf.ARTISTS]):
-        print(key)
-        #artist = catalog[cf.ARTISTS][key]
-        #if int(artist['BeginDate']) > year1 and int(artist['BeginDate']) < year2:
-        #    lt.addLast(artist)
+    artistas = lt.newList(datastructure='ARRAY_LIST')
+    keys = mp.keySet(catalog)
+    i = iter.newIterator(keys)
+    while iter.hasNext(i):
+        key = iter.next(i)
+        artist = mp.get(catalog, key)['value']
+        if artist != None and int(artist['BeginDate']) > year1 and int(artist['BeginDate']) < year2:
+            lt.addLast(artistas, artist)        
     ms.sort(artistas, cmp_artist_date)
+
+    return artistas
     
 
 
@@ -119,14 +125,12 @@ def get_date(catalog,año1,mes1,dia1):
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def cmp_artist_date(artist1, artist2):
-    year1 = artist1['BeginDate']
-    year2 = artist2['BeginDate']
-
-    if year1 < year2:
-        return -1
-    elif year2 < year1:
-        return 1
-    else:
-        return 0
+    result = 0
+    
+    if artist1['BeginDate'] > artist2['BeginDate']:
+        result = 1
+    elif artist1['BeginDate'] < artist2['BeginDate']:
+        result = -1
+    return result
 
 # Funciones de ordenamiento

@@ -6,3 +6,4 @@ ARTWORKS = 'Artworks'
 ARTISTS = 'Artists'
 sys.path.insert(0, os.path.abspath(file_path))
 data_dir = file_dir + '/Data/'
+sys.setrecursionlimit(10**6)
