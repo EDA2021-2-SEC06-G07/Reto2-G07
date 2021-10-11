@@ -83,6 +83,7 @@ def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
     artworks=lt.newList(datastructure='ARRAY_LIST')
     keys = mp.keySet(catalog)
     i = iter.newIterator(keys)
+    contador = 0
     while iter.hasNext(i):
         key = iter.next(i)
         trabajos = mp.get(catalog, key)['value']
@@ -92,7 +93,13 @@ def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
             fecha= datetime.date(int(lista[0]),int(lista[1]),int(lista[2]))
             if fecha > date1 and fecha < date2:
                 lt.addLast(artworks, trabajos)
+        purchase= trabajos['CreditLine']
+        if 'Purchase' in purchase:
+            contador += 1
     ms.sort(artworks,cmp_artwork_date)
+    print('-------------------------')
+    print('Las obras en purchase son : '+ str(contador))
+    print('')
     return artworks
 
 # Funciones para creacion de datos

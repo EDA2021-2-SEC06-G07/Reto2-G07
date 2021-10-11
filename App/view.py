@@ -94,12 +94,12 @@ if __name__ == "__main__":
 
         elif int(inputs[0]) == 2:
             print("Si va a escribir una fecha, omita los 0 antes de los numeros ")
-            año1 = int(input("Gregue el año de la fecha 1: "))
-            mes1 = int(input("Gregue el año de la fecha 1: "))
-            dia1 = int(input("Gregue el año de la fecha 1: "))
-            año2 = int(input("Gregue el año de la fecha 2: "))
-            mes2 = int(input("Gregue el año de la fecha 2: "))
-            dia2 = int(input("Gregue el año de la fecha 2: "))
+            año1 = int(input("Agregue el año de la fecha 1: "))
+            mes1 = int(input("Agregue el mes de la fecha 1: "))
+            dia1 = int(input("Agregue el dia de la fecha 1: "))
+            año2 = int(input("Agregue el año de la fecha 2: "))
+            mes2 = int(input("Agregue el mes de la fecha 2: "))
+            dia2 = int(input("Agregue el dia de la fecha 2: "))
             artworks= controller.req2(catalog[cf.ARTWORKS],año1,mes1,dia1,año2,mes2,dia2)
             print("Las obras en esas fechas son: "+ str(lt.size(artworks)))
             print('')
