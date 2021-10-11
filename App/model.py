@@ -55,7 +55,6 @@ def newCatalog():
     }
     catalog[cf.ARTISTS] = mp.newMap(maptype = 'CHAINING')
     catalog[cf.ARTWORKS] = mp.newMap(maptype = 'CHAINING')
-    catalog['dates']= mp.newMap(600, maptype='PROBING',loadfactor=0.5)
     return catalog
 
 
@@ -65,38 +64,6 @@ def add_artwork(map, artwork):
 def add_artist(map, artist):
     mp.put(map, artist['ConstituentID'], artist)
 # Funciones para agregar informacion al catalogo
-def add_dates(catalog,catalogo):
-    #catalog con los ARTWORKS
-    #catalogo es el mapa de las dates
-    years = catalogo
-    for i in range(0,lt.size(catalog)-1):
-        element= lt.getElement(catalog,i)
-        fecha=element['DateAcquired']
-        if (fecha != ''):
-            pubyear = fecha
-            pubyear= pubyear.split('-')
-            pubyear = datetime.date(float(pubyear[0]) ,float(pubyear[1]),float(pubyear[2]))
-            print(pubyear)
-        else:
-            pubyear = datetime.date(2020,8,9)
-        existyear = mp.contains(years, pubyear)
-        if existyear:
-            entry = mp.get(years, pubyear)
-            year = me.getValue(entry)
-        else:
-            year = newDate(pubyear)
-            mp.put(years, pubyear, year)
-        lt.addLast(year['dates'], element)
-    return years
-
-    
-def newDate(pubyear):
-    
-    entry = {'date': "", "ARTWORKS": None}
-    entry['date'] = pubyear
-    entry['ARTWORKS'] = lt.newList('SINGLE_LINKED')
-    return entry
-
 def req1(catalog, year1, year2):
     artistas = lt.newList(datastructure='ARRAY_LIST')
     keys = mp.keySet(catalog)
@@ -109,17 +76,27 @@ def req1(catalog, year1, year2):
     ms.sort(artistas, cmp_artist_date)
 
     return artistas
-    
 
+def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
+    date1=datetime.date(año1,mes1,dia1)
+    date2=datetime.date(año2,mes2,dia2)
+    artworks=lt.newList(datastructure='ARRAY_LIST')
+    keys = mp.keySet(catalog)
+    i = iter.newIterator(keys)
+    while iter.hasNext(i):
+        key = iter.next(i)
+        trabajos = mp.get(catalog, key)['value']
+        lista1= trabajos['DateAcquired']
+        if lista1!= None and lista1!= '':
+            lista= lista1.split('-')
+            fecha= datetime.date(int(lista[0]),int(lista[1]),int(lista[2]))
+            if fecha > date1 and fecha < date2:
+                lt.addLast(artworks, trabajos)
+    ms.sort(artworks,cmp_artwork_date)
+    return artworks
 
 # Funciones para creacion de datos
-def get_date(catalog,año1,mes1,dia1):
-    date1=datetime.date(año1,mes1,dia1)
-    #date2=datetime.date(año2,mes2,dia2)
-    date=mp.get(catalog['dates'], date1)
-    if date:
-        return me.getValue(date)
-    return None
+
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
@@ -133,4 +110,16 @@ def cmp_artist_date(artist1, artist2):
         result = -1
     return result
 
+def cmp_artwork_date(art1, art2):
+    result = 0
+    art1= art1['DateAcquired'].split('-')
+    art2= art2['DateAcquired'].split('-')
+    art1= datetime.date(int(art1[0]),int(art1[1]),int(art1[2]))
+    art2= datetime.date(int(art2[0]),int(art2[1]),int(art2[2]))
+    if art1 > art2:
+        result = 1
+    elif art1 < art2:
+        result = -1
+    return result
+    
 # Funciones de ordenamiento

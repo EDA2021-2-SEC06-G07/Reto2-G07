@@ -97,14 +97,36 @@ if __name__ == "__main__":
             año1 = int(input("Gregue el año de la fecha 1: "))
             mes1 = int(input("Gregue el año de la fecha 1: "))
             dia1 = int(input("Gregue el año de la fecha 1: "))
-            #año2 = int(input("Gregue el año de la fecha 2: "))
-            #mes2 = int(input("Gregue el año de la fecha 2: "))
-            #dia2 = int(input("Gregue el año de la fecha 2: "))
-            mapa= controller.get_date(controller.GetDate(catalog[cf.ARTWORKS],catalog['dates']),año1,mes1,dia1)
-            
-            print(mapa)
-
-            pass
+            año2 = int(input("Gregue el año de la fecha 2: "))
+            mes2 = int(input("Gregue el año de la fecha 2: "))
+            dia2 = int(input("Gregue el año de la fecha 2: "))
+            artworks= controller.req2(catalog[cf.ARTWORKS],año1,mes1,dia1,año2,mes2,dia2)
+            print("Las obras en esas fechas son: "+ str(lt.size(artworks)))
+            print('')
+            print('los primeros 3 son:')
+            print('')
+            for i in range(0,3):
+                print('Titulo: '+ lt.getElement(artworks,i)['Title'])
+                print('ID(s): '+ lt.getElement(artworks,i)['ConstituentID']) 
+                print('Fecha: '+ lt.getElement(artworks,i)['DateAcquired']) 
+                print('Medio: '+ lt.getElement(artworks,i)['Medium'])
+                if  lt.getElement(artworks,i)['Dimensions'] != None and lt.getElement(artworks,i)['Dimensions'] != '':
+                    print('Dimensiones: '+ lt.getElement(artworks,i)['Dimensions']) 
+                elif lt.getElement(artworks,i)['Dimensions'] == None or lt.getElement(artworks,i)['Dimensions'] == '':
+                    print('Dimensiones: Unknown ')    
+                print('')
+            print('los ultimos 3 son:')
+            print('')
+            for i in range(lt.size(artworks)-3,lt.size(artworks)):
+                print('Titulo: '+ lt.getElement(artworks,i)['Title'])
+                print('ID(s): '+ lt.getElement(artworks,i)['ConstituentID']) 
+                print('Fecha: '+ lt.getElement(artworks,i)['DateAcquired']) 
+                print('Medio: '+ lt.getElement(artworks,i)['Medium'])
+                if  lt.getElement(artworks,i)['Dimensions'] != None and lt.getElement(artworks,i)['Dimensions'] != '':
+                    print('Dimensiones: '+ lt.getElement(artworks,i)['Dimensions']) 
+                elif lt.getElement(artworks,i)['Dimensions'] == None or lt.getElement(artworks,i)['Dimensions'] == '':
+                    print('Dimensiones: Unknown ')    
+                print('')
 
         else:
             running = False
