@@ -111,6 +111,36 @@ def req1(catalog, year1, year2):
     return artistas
     
 
+def req4(catalog):
+    # create a map. key: country, value: list
+    nationalities = mp.newMap(maptype = 'CHAINING')
+    nationalities_keys = lt.newList()
+    key_artworks = mp.keySet(catalog[cf.ARTWORKS])
+    i = iter.newIterator(key_artworks)
+    while iter.hasNext(i):
+        key = iter.next(i)
+        element = mp.get(catalog[cf.ARTWORKS], key)
+        nationality = mp.get(catalog[cf.ARTISTS], element['ConstituentID'])['Nationality']
+
+        #look for the nationality in the keys
+        found = False
+        j = iter.newIterator(nationalities_keys)
+        while iter.hasNext(j) and found != True:
+            current = iter.next(j)
+            if nationality == current:
+                found = True
+                lt.addLast(mp.get(nationalities, nationality), element)
+        
+        # key was not found in the map
+        if not found:
+            # add the new list
+            mp.put(nationalities, nationality, lt.newList())
+            lt.addLast(mp.get(nationalities, nationality) ,element)
+
+
+        
+    return nationalities
+
 
 # Funciones para creacion de datos
 def get_date(catalog,año1,mes1,dia1):

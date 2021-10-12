@@ -40,8 +40,10 @@ operación solicitada
 def printMenu():
     menu = """Bienvenido
     0- Carga de datos
-    1- 
-    2-dswdwdww"""
+    1- Artistas nacidos entre dos fechas
+    2- dswdwdww
+    3- 
+    4- """
     print(menu)
 
 catalog = None
@@ -104,6 +106,12 @@ if __name__ == "__main__":
             
             print(mapa)
 
+            pass
+        elif int(inputs[0] == 3):
+            pass
+
+        elif int(inputs[0] == 4):
+            nationalities = controller.req4(catalog)
             pass
 
         else:
