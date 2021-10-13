@@ -102,6 +102,29 @@ def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
     print('')
     return artworks
 
+def req3(catalog, artista):
+    artworks=lt.newList(datastructure='ARRAY_LIST')
+    del_mas_usada=lt.newList(datastructure='ARRAY_LIST')
+    keys = mp.keySet(catalog[cf.ARTISTS])
+    #crea una tadlist
+    i = iter.newIterator(keys)
+    while iter.hasNext(i):
+        key = iter.next(i)
+        autores = mp.get(catalog[cf.ARTISTS], key)['value']
+        #me.getvalue(trabajos)
+        names= autores['DisplayName']
+        if artista in names:
+            id = autores['ConstituentID']
+    keys = mp.keySet(catalog[cf.ARTWORKS])
+    #crea una tadlist
+    i = iter.newIterator(keys)
+    while iter.hasNext(i):
+        key = iter.next(i)
+        autores= mp.get(catalog[cf.ARTWORKS], key)['value']
+        ids=autores['ConstituentID']
+
+    return catalog[cf.ARTISTS]
+
 # Funciones para creacion de datos
 
 # Funciones de consulta

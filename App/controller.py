@@ -69,5 +69,9 @@ def req1(catalog, year1, year2):
 
 def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
     return model.req2(catalog,año1,mes1,dia1,año2,mes2,dia2)
+<<<<<<< HEAD
+=======
+
+>>>>>>> caf9752d7c3475fd5105ec9a69bf1785c5fde8d3
 def req3(catalog,artista):
     return model.req3(catalog,artista)
