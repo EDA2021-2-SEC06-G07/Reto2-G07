@@ -41,7 +41,8 @@ def printMenu():
     menu = """Bienvenido
     0- Carga de datos
     1- 
-    2-dswdwdww"""
+    2-listar cronológicamente las adquisiciones  
+    3-clasificar las obras de un artista por técnica"""
     print(menu)
 
 catalog = None
@@ -101,6 +102,8 @@ if __name__ == "__main__":
             mes2 = int(input("Agregue el mes de la fecha 2: "))
             dia2 = int(input("Agregue el dia de la fecha 2: "))
             artworks= controller.req2(catalog[cf.ARTWORKS],año1,mes1,dia1,año2,mes2,dia2)
+            #req2(catalog)
+            #catalog['ARTWORKS']
             print("Las obras en esas fechas son: "+ str(lt.size(artworks)))
             print('')
             print('los primeros 3 son:')
@@ -128,5 +131,8 @@ if __name__ == "__main__":
                     print('Dimensiones: Unknown ')    
                 print('')
 
-        else:
+        elif int(inputs[0]) == 3:
+            artista= str(input('Agregue el nombre del artista: '))
+            print(controller.req3(catalog,artista))
+        else:    
             running = False

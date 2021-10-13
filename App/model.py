@@ -35,6 +35,7 @@ from DISClib.DataStructures import mapentry as me
 from DISClib.DataStructures import linkedlistiterator as iter
 from DISClib.Algorithms.Sorting import shellsort as sa
 import datetime
+from statistics import mode 
 assert cf
 
 ARTISTAS = "Artistas"
@@ -51,7 +52,7 @@ def newCatalog():
     catalog = {
         cf.ARTWORKS: None,
         cf.ARTISTS: None,
-        'dates':None
+        
     }
     catalog[cf.ARTISTS] = mp.newMap(maptype = 'CHAINING')
     catalog[cf.ARTWORKS] = mp.newMap(maptype = 'CHAINING')
@@ -82,11 +83,13 @@ def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
     date2=datetime.date(año2,mes2,dia2)
     artworks=lt.newList(datastructure='ARRAY_LIST')
     keys = mp.keySet(catalog)
+    #crea una tadlist
     i = iter.newIterator(keys)
     contador = 0
     while iter.hasNext(i):
         key = iter.next(i)
         trabajos = mp.get(catalog, key)['value']
+        #me.getvalue(trabajos)
         lista1= trabajos['DateAcquired']
         if lista1!= None and lista1!= '':
             lista= lista1.split('-')
@@ -102,6 +105,28 @@ def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
     print('')
     return artworks
 
+def req3(catalog, artista):
+    artworks=lt.newList(datastructure='ARRAY_LIST')
+    del_mas_usada=lt.newList(datastructure='ARRAY_LIST')
+    keys = mp.keySet(catalog[cf.ARTISTS])
+    #crea una tadlist
+    i = iter.newIterator(keys)
+    while iter.hasNext(i):
+        key = iter.next(i)
+        autores = mp.get(catalog[cf.ARTISTS], key)['value']
+        #me.getvalue(trabajos)
+        names= autores['DisplayName']
+        if artista in names:
+            id = autores['ConstituentID']
+    keys = mp.keySet(catalog[cf.ARTWORKS])
+    #crea una tadlist
+    i = iter.newIterator(keys)
+    while iter.hasNext(i):
+        key = iter.next(i)
+        autores= mp.get(catalog[cf.ARTWORKS], key)['value']
+        ids=autores['ConstituentID']
+
+    return catalog[cf.ARTISTS]
 # Funciones para creacion de datos
 
 # Funciones de consulta
