@@ -76,3 +76,5 @@ def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
 
 def req3(catalog,artista):
     return model.req3(catalog,artista)
+def lab_6(catalog,tipo,carga):
+    return model.lab_6(catalog,tipo,carga)
