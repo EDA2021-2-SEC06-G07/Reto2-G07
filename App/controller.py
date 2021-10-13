@@ -70,3 +70,9 @@ def req1(catalog, year1, year2):
 
 def req4(catalog):
     return model.req4(catalog)
+
+def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
+    return model.req2(catalog,año1,mes1,dia1,año2,mes2,dia2)
+
+def req3(catalog,artista):
+    return model.req3(catalog,artista)
