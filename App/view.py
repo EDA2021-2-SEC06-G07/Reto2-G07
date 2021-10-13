@@ -41,7 +41,8 @@ def printMenu():
     menu = """Bienvenido
     0- Carga de datos
     1- 
-    2-dswdwdww"""
+    2-listar cronológicamente las adquisiciones  
+    3-clasificar las obras de un artista por técnica"""
     print(menu)
 
 catalog = None
@@ -128,5 +129,8 @@ if __name__ == "__main__":
                     print('Dimensiones: Unknown ')    
                 print('')
 
+        elif int(inputs[0]) == 3:
+            artista= str(input('Agregue el nombre del artista: '))
+            print(controller.req3(catalog,artista))
         else:
             running = False
