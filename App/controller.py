@@ -25,8 +25,8 @@ import model
 import csv
 
 
-FILE_ARTISTS = 'MoMa/Artists-utf8-small.csv'
-FILE_ARTWORKS = 'MoMa/Artworks-utf8-small.csv' 
+FILE_ARTISTS = 'MoMa/Artists-utf8-large.csv'
+FILE_ARTWORKS = 'MoMa/Artworks-utf8-large.csv' 
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.

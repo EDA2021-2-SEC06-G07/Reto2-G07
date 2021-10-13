@@ -43,7 +43,7 @@ def printMenu():
     1- Artistas nacidos entre dos fechas
     2- dswdwdww
     3- 
-    4- """
+    4- Nacionalidades"""
     print(menu)
 
 catalog = None
@@ -107,12 +107,16 @@ if __name__ == "__main__":
             print(mapa)
 
             pass
-        elif int(inputs[0] == 3):
+        elif int(inputs[0]) == 3:
             pass
 
-        elif int(inputs[0] == 4):
+        elif int(inputs[0]) == 4:
             nationalities = controller.req4(catalog)
-            pass
+            i = iter.newIterator(mp.keySet(nationalities))
+            while iter.hasNext(i):
+                key = iter.next(i)
+                size = mp.get(nationalities, key)['value']['size']
+                print(f'Amount of artworks in {key}: {size}')
 
         else:
             running = False

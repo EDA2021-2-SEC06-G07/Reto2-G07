@@ -119,8 +119,9 @@ def req4(catalog):
     i = iter.newIterator(key_artworks)
     while iter.hasNext(i):
         key = iter.next(i)
-        element = mp.get(catalog[cf.ARTWORKS], key)
-        nationality = mp.get(catalog[cf.ARTISTS], element['ConstituentID'])['Nationality']
+        element = mp.get(catalog[cf.ARTWORKS], key)['value']
+        c_id = element['ConstituentID'].replace('[', '').replace(']', '').split(',')[0]
+        nationality = mp.get(catalog[cf.ARTISTS], c_id)['value']['Nationality']
 
         #look for the nationality in the keys
         found = False
@@ -129,16 +130,15 @@ def req4(catalog):
             current = iter.next(j)
             if nationality == current:
                 found = True
-                lt.addLast(mp.get(nationalities, nationality), element)
+                lt.addLast(mp.get(nationalities, nationality)['value'], element)
         
         # key was not found in the map
         if not found:
             # add the new list
             mp.put(nationalities, nationality, lt.newList())
-            lt.addLast(mp.get(nationalities, nationality) ,element)
+            lt.addLast(mp.get(nationalities, nationality)['value'] ,element)
+            lt.addLast(nationalities_keys, nationality)
 
-
-        
     return nationalities
 
 
