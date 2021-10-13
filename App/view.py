@@ -134,6 +134,11 @@ if __name__ == "__main__":
             print(controller.req3(catalog,artista))
         elif int(inputs[0]) == 4:
             nationalities = controller.req4(catalog)
+            array = controller.sort_nationalities(nationalities)
+            for elem in array:
+                key = elem['key']
+                size = elem['value']['size']
+                print(f'Amount of artworks in {key}: {size}')
             i = iter.newIterator(mp.keySet(nationalities))
             while iter.hasNext(i):
                 key = iter.next(i)

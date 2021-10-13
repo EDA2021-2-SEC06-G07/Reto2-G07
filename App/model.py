@@ -107,6 +107,7 @@ def req4(catalog):
 
     return nationalities
 
+
 def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
     date1=datetime.date(año1,mes1,dia1)
     date2=datetime.date(año2,mes2,dia2)
@@ -204,3 +205,33 @@ def req3(catalog, artista):
 
     return catalog[cf.ARTISTS]
 # Funciones de ordenamiento
+
+
+# insertion sort del diccionario, a un arreglo de tamaño definido
+# se usa insertion ya que pese a ser O(n²), son pocas las nacionalidades
+# y dificilmente superaran los 64 elementos siendo en tiempo insertion
+# mas eficiente que merge o quick
+def sort_nationalities(nationalities):
+    # no se usa la estructura de datos dada, ya que no es posible establecer un size 
+    # fijo para esta, esto haria insertar en el peor caso, O(n²) pero como se sabe la
+    # cantidad de elementos que va a haber en el arreglo, la complegidad es O(1) para 
+    # todos los casos
+    array = [None] * mp.size(nationalities)
+    it = iter.newIterator(mp.keySet(nationalities))
+    i = 0
+    while iter.hasNext(it):
+        key = iter.next(it)
+        elem = mp.get(nationalities, key)
+        size = elem['value']['size']
+        j = i
+        array[i] = elem
+        stop = False
+        while j > 0 and not stop:
+            size_prev = array[j]['value']['size']
+            if size > size_prev:
+                array[j], array[j-1] = array[j-1], array[j]
+            else:
+                stop = True
+            j += 1
+        i += 1
+    return array
