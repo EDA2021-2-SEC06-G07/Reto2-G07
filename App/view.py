@@ -135,8 +135,10 @@ if __name__ == "__main__":
         
         elif int(inputs[0]) == 3:
             artista= str(input('Agregue el nombre del artista: '))
-            print(controller.req3(catalog,artista))
-        
+            id=(controller.req3(catalog,artista))
+            medios=controller.req3_1(catalog,id)
+            print('El ID del artista es: '+ str(id))
+            print('El total de medios es: '+ str(mp.size(medios)))
         elif int(inputs[0]) == 4:
             nationalities = controller.req4(catalog)
             array = controller.sort_nationalities(nationalities)

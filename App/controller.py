@@ -25,8 +25,8 @@ import model
 import csv
 
 
-FILE_ARTISTS = 'MoMa/Artists-utf8-large.csv'
-FILE_ARTWORKS = 'MoMa/Artworks-utf8-large.csv' 
+FILE_ARTISTS = 'MoMa/Artists-utf8-small.csv'
+FILE_ARTWORKS = 'MoMa/Artworks-utf8-small.csv' 
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
@@ -78,6 +78,9 @@ def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
 
 def req3(catalog,artista):
     return model.req3(catalog,artista)
+
+def req3_1(catalog,id):
+    return model.req3_1(catalog,id)
 
 
 def sort_nationalities(nationalities):

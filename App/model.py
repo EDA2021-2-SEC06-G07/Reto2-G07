@@ -108,7 +108,6 @@ def req4(catalog):
 
     return nationalities
 
-
 def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
     date1=datetime.date(año1,mes1,dia1)
     date2=datetime.date(año2,mes2,dia2)
@@ -135,8 +134,6 @@ def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
     return artworks
 
 def req3(catalog, artista):
-    artworks=lt.newList(datastructure='ARRAY_LIST')
-    del_mas_usada=lt.newList(datastructure='ARRAY_LIST')
     keys = mp.keySet(catalog[cf.ARTISTS])
     #crea una tadlist
     i = iter.newIterator(keys)
@@ -147,15 +144,7 @@ def req3(catalog, artista):
         names= autores['DisplayName']
         if artista in names:
             id = autores['ConstituentID']
-    keys = mp.keySet(catalog[cf.ARTWORKS])
-    #crea una tadlist
-    i = iter.newIterator(keys)
-    while iter.hasNext(i):
-        key = iter.next(i)
-        autores= mp.get(catalog[cf.ARTWORKS], key)['value']
-        ids=autores['ConstituentID']
-
-    return catalog[cf.ARTISTS]
+    return id
 
 # Funciones para creacion de datos
 def lab_6(catalog,tipo,carga):
@@ -259,8 +248,6 @@ def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
     return artworks
 
 def req3(catalog, artista):
-    artworks=lt.newList(datastructure='ARRAY_LIST')
-    del_mas_usada=lt.newList(datastructure='ARRAY_LIST')
     keys = mp.keySet(catalog[cf.ARTISTS])
     #crea una tadlist
     i = iter.newIterator(keys)
@@ -277,69 +264,7 @@ def req3(catalog, artista):
     while iter.hasNext(i):
         key = iter.next(i)
         autores= mp.get(catalog[cf.ARTWORKS], key)['value']
-        ids=autores['ConstituentID']
-
-    return catalog[cf.ARTISTS]
-def req3(catalog, artista):
-    artworks=lt.newList(datastructure='ARRAY_LIST')
-    del_mas_usada=lt.newList(datastructure='ARRAY_LIST')
-    keys = mp.keySet(catalog[cf.ARTISTS])
-    #crea una tadlist
-    i = iter.newIterator(keys)
-    while iter.hasNext(i):
-        key = iter.next(i)
-        autores = mp.get(catalog[cf.ARTISTS], key)['value']
-        #me.getvalue(trabajos)
-        names= autores['DisplayName']
-        if artista in names:
-            id = autores['ConstituentID']
-    keys = mp.keySet(catalog[cf.ARTWORKS])
-    #crea una tadlist
-    i = iter.newIterator(keys)
-    while iter.hasNext(i):
-        key = iter.next(i)
-        autores= mp.get(catalog[cf.ARTWORKS], key)['value']
-        ids=autores['ConstituentID']
-
-
-# Funciones utilizadas para comparar elementos dentro de una lista
-    return catalog[cf.ARTISTS]
-
-def cmp_artwork_date(art1, art2):
-    result = 0
-    art1= art1['DateAcquired'].split('-')
-    art2= art2['DateAcquired'].split('-')
-    art1= datetime.date(int(art1[0]),int(art1[1]),int(art1[2]))
-    art2= datetime.date(int(art2[0]),int(art2[1]),int(art2[2]))
-    if art1 > art2:
-        result = 1
-    elif art1 < art2:
-        result = -1
-    return result
-
-
-def cmp_artist_date(artist1, artist2):
-    result = 0
-    
-    if artist1['BeginDate'] > artist2['BeginDate']:
-        result = 1
-    elif artist1['BeginDate'] < artist2['BeginDate']:
-        result = -1
-    return result
-
-
-def cmp_artwork_date(art1, art2):
-    result = 0
-    art1= art1['DateAcquired'].split('-')
-    art2= art2['DateAcquired'].split('-')
-    art1= datetime.date(int(art1[0]),int(art1[1]),int(art1[2]))
-    art2= datetime.date(int(art2[0]),int(art2[1]),int(art2[2]))
-    if art1 > art2:
-        result = 1
-    elif art1 < art2:
-        result = -1
-    return result
-
+    return id
 
 def req3_1(catalog, id):
     medios= mp.newMap(maptype='CHAINING')
@@ -350,11 +275,11 @@ def req3_1(catalog, id):
         key = iter.next(i)
         element = mp.get(catalog[cf.ARTWORKS], key)['value']
         id2=int(element['ConstituentID'].replace('[', '').replace(']', '').split(',')[0])
-        # Si se imprime sin el .split hay una coma en el medio, por eso se divide
-        
-        if id == id2:
-            medio=mp.get(catalog[cf.ARTWORKS],id2)['value']['Medium']
-
+        # Si se imprime sin el .split hay una coma en el medio, por eso se divid
+        obid = int(element['ObjectID'])
+        if int(id) == int(id2):
+            medio=mp.get(catalog[cf.ARTWORKS],obid)['value']
+            medio= medio['Medium']
             found=False
             j = iter.newIterator(llave_medios)
             while iter.hasNext(j) and found != True:
@@ -366,37 +291,26 @@ def req3_1(catalog, id):
                 mp.put(medios,medio,lt.newList())
                 lt.addLast(mp.get(medios,medio)['value'], element)
                 lt.addLast(llave_medios,medio)
-    return id
+    return medios
+
 # Funciones de ordenamiento
+def cmp_artist_date(artist1, artist2):
+    result = 0
+    
+    if artist1['BeginDate'] > artist2['BeginDate']:
+        result = 1
+    elif artist1['BeginDate'] < artist2['BeginDate']:
+        result = -1
+    return result
 
-
-# insertion sort del diccionario, a un arreglo de tamaño definido
-# se usa insertion ya que pese a ser O(n²), son pocas las nacionalidades
-# y dificilmente superaran los 64 elementos siendo en tiempo insertion
-# mas eficiente que merge o quick
-def sort_nationalities(nationalities):
-    # no se usa la estructura de datos dada, ya que no es posible establecer un size 
-    # fijo para esta, esto haria insertar en el peor caso, O(n²) pero como se sabe la
-    # cantidad de elementos que va a haber en el arreglo, la complegidad es O(1) para 
-    # todos los casos
-    array = [None] * mp.size(nationalities)
-    it = iter.newIterator(mp.keySet(nationalities))
-    i = 0
-    while iter.hasNext(it):
-        elem = mp.get(nationalities, iter.next(it))
-        array[i] = elem
-        size = elem['value']['size']
-
-        j = i
-        stop = False
-        while j > 0 and not stop:
-            if size > array[j-1]['value']['size']:
-                
-                temp = array[j]
-                array[j] = array[j-1]
-                array[j-1] = temp
-            else:
-                stop = True
-            j -= 1
-        i += 1
-    return array
+def cmp_artwork_date(art1, art2):
+    result = 0
+    art1= art1['DateAcquired'].split('-')
+    art2= art2['DateAcquired'].split('-')
+    art1= datetime.date(int(art1[0]),int(art1[1]),int(art1[2]))
+    art2= datetime.date(int(art2[0]),int(art2[1]),int(art2[2]))
+    if art1 > art2:
+        result = 1
+    elif art1 < art2:
+        result = -1
+    return result
