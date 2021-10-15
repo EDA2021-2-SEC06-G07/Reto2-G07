@@ -43,7 +43,10 @@ def printMenu():
     1- Artistas nacidos entre dos fechas
     2- listar cronológicamente las adquisiciones
     3- clasificar las obras de un artista por técnica
-    4- Nacionalidades"""
+    4- Nacionalidades
+    5-
+    6-
+    7-Tiempo de carga de mapas laboratorio"""
     print(menu)
 
 catalog = None
@@ -129,9 +132,11 @@ if __name__ == "__main__":
                 elif lt.getElement(artworks,i)['Dimensions'] == None or lt.getElement(artworks,i)['Dimensions'] == '':
                     print('Dimensiones: Unknown ')    
                 print('')
+        
         elif int(inputs[0]) == 3:
             artista= str(input('Agregue el nombre del artista: '))
             print(controller.req3(catalog,artista))
+        
         elif int(inputs[0]) == 4:
             nationalities = controller.req4(catalog)
             array = controller.sort_nationalities(nationalities)
@@ -139,6 +144,11 @@ if __name__ == "__main__":
                 key = elem['key']
                 size = elem['value']['size']
                 print(f'Amount of artworks in {key}: {size}')
-            
+        
+        elif int(inputs[0])== 7:
+            tipo= str(input('Escripe el MapType de la carga entre comillas: '))
+            carga= float(input('Escribe el factor de carga: '))
+            print('el tiempo de demora al cargar el mapa de nacionalidades es: '+ str(controller.lab_6(catalog,tipo,carga)))
+
         else:
             running = False
