@@ -139,10 +139,6 @@ if __name__ == "__main__":
                 key = elem['key']
                 size = elem['value']['size']
                 print(f'Amount of artworks in {key}: {size}')
-            i = iter.newIterator(mp.keySet(nationalities))
-            while iter.hasNext(i):
-                key = iter.next(i)
-                size = mp.get(nationalities, key)['value']['size']
-                print(f'Amount of artworks in {key}: {size}')
+            
         else:
             running = False

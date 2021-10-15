@@ -182,6 +182,8 @@ def cmp_artwork_date(art1, art2):
     elif art1 < art2:
         result = -1
     return result
+
+
 def req3(catalog, artista):
     artworks=lt.newList(datastructure='ARRAY_LIST')
     del_mas_usada=lt.newList(datastructure='ARRAY_LIST')
@@ -204,6 +206,33 @@ def req3(catalog, artista):
         ids=autores['ConstituentID']
 
     return catalog[cf.ARTISTS]
+
+def req3_1(catalog, id):
+    medios= mp.newMap(maptype='CHAINING')
+    llave_medios=lt.newList()
+    key_artworks = mp.keySet(catalog[cf.ARTWORKS])
+    i = iter.newIterator(key_artworks)
+    while iter.hasNext(i):
+        key = iter.next(i)
+        element = mp.get(catalog[cf.ARTWORKS], key)['value']
+        id2=int(element['ConstituentID'].replace('[', '').replace(']', '').split(',')[0])
+        # Si se imprime sin el .split hay una coma en el medio, por eso se divide
+        
+        if id == id2:
+            medio=mp.get(catalog[cf.ARTWORKS],id2)['value']['Medium']
+
+            found=False
+            j = iter.newIterator(llave_medios)
+            while iter.hasNext(j) and found != True:
+                current = iter.next(j)
+                if medio==current:
+                    found=True
+                    lt.addLast(mp.get(medios,medio)['value'], element)
+            if not found:
+                mp.put(medios,medio,lt.newList())
+                lt.addLast(mp.get(medios,medio)['value'], element)
+                lt.addLast(llave_medios,medio)
+    return id
 # Funciones de ordenamiento
 
 
@@ -220,18 +249,20 @@ def sort_nationalities(nationalities):
     it = iter.newIterator(mp.keySet(nationalities))
     i = 0
     while iter.hasNext(it):
-        key = iter.next(it)
-        elem = mp.get(nationalities, key)
-        size = elem['value']['size']
-        j = i
+        elem = mp.get(nationalities, iter.next(it))
         array[i] = elem
+        size = elem['value']['size']
+
+        j = i
         stop = False
         while j > 0 and not stop:
-            size_prev = array[j]['value']['size']
-            if size > size_prev:
-                array[j], array[j-1] = array[j-1], array[j]
+            if size > array[j-1]['value']['size']:
+                
+                temp = array[j]
+                array[j] = array[j-1]
+                array[j-1] = temp
             else:
                 stop = True
-            j += 1
+            j -= 1
         i += 1
     return array
