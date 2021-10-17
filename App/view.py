@@ -44,7 +44,7 @@ def printMenu():
     2- listar cronológicamente las adquisiciones
     3- clasificar las obras de un artista por técnica
     4- Nacionalidades
-    5-
+    5- Transportar obras de un departamento
     6-
     7-Tiempo de carga de mapas laboratorio"""
     print(menu)
@@ -176,7 +176,14 @@ if __name__ == "__main__":
                 key = elem['key']
                 size = elem['value']['size']
                 print(f'Amount of artworks in {key}: {size}')
-        
+
+
+        elif int(inputs[0]) == 5:
+            departamento= str(input('Escriba el depasrtamento: '))
+            lista= controller.req5(catalog[cf.ARTWORKS],departamento)
+            print(lista)
+            
+            
         elif int(inputs[0])== 7:
             tipo= str(input('Escripe el MapType de la carga entre comillas: '))
             carga= float(input('Escribe el factor de carga: '))

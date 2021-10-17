@@ -243,7 +243,63 @@ def req3_1(catalog, id):
     print('la mas usada es: ' + usada)
     return lista2
             
-    
+def req5(catalog,departamento):
+    lista=lt.newList(datastructure='ARRAY_LIST')
+    contador_peso= 0
+    contador_costo= 0
+    keys = mp.keySet(catalog)
+    i = iter.newIterator(keys)
+    while iter.hasNext(i):
+        key = iter.next(i)
+        trabajos = mp.get(catalog, key)['value']
+        depa=trabajos['Department']
+        if depa == departamento:
+            Largo = 0
+            Ancho = 0
+            Alto = 0
+            Peso = 0
+            countLongitud=0
+            countPeso=0 
+            costos= 0
+            if trabajos['Width (cm)']!= None and trabajos['Width (cm)']!="":
+                Ancho = (float(trabajos['Width (cm)']))/100
+            else:
+                Ancho = 1
+            if trabajos['Height (cm)']!= None and trabajos['Height (cm)']!="":
+                Alto = (float(trabajos['Height (cm)']))/100
+            else:
+                    Alto = 1
+            if trabajos['Length (cm)']!= None and trabajos['Length (cm)']!= "":
+                        Largo = (float(trabajos['Length (cm)']))/100
+            else:
+                Largo=1
+            countLongitud= 72*(Alto * Ancho * Largo)
+            if trabajos['Weight (kg)'] != None and trabajos['Weight (kg)'] != "":
+                Peso= float(trabajos['Weight (kg)'])
+            else: 
+                Peso= 0
+            countPeso= 72*(Peso)
+
+            if countPeso > countLongitud:
+                costos=countPeso
+            else: 
+                costos=countLongitud
+            contador_costo += costos
+            contador_peso += Peso
+            dicc={}               
+            dicc['Title']= trabajos['Title']
+            dicc['Artistas']= trabajos['ConstituentID']
+            dicc['Classification']= trabajos['Classification']
+            dicc['DateAcquired']=trabajos['DateAcquired']
+            dicc['Medio']= trabajos['Medium']
+            dicc['Dimensions']= trabajos['Dimensions']
+            dicc['Costo']= costos
+            lt.addLast(lista,dicc)
+    print('---------------')
+    print('El costo estimado es de: ' + str(contador_costo))
+    print('')
+    print('El peso total es de: ' + str(contador_peso))
+    return lista
 
 # Funciones de ordenamiento
 def cmp_artist_date(artist1, artist2):
