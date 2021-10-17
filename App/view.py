@@ -161,7 +161,6 @@ if __name__ == "__main__":
                 print('Titulo: '+ lt.getElement(medios,i)['Title'])
                 print('Fecha: '+ lt.getElement(medios,i)['DateAcquired']) 
                 print('Medio: '+ lt.getElement(medios,i)['Medium']) 
-                print('Dimensiones: '+ lt.getElement(medios,i)['Dimensions'])
                 if  lt.getElement(medios,i)['Dimensions'] != None and lt.getElement(medios,i)['Dimensions'] != '':
                     print('Dimensiones: '+ lt.getElement(medios,i)['Dimensions']) 
                 elif lt.getElement(medios,i)['Dimensions'] == None or lt.getElement(medios,i)['Dimensions'] == '':
@@ -181,7 +180,39 @@ if __name__ == "__main__":
         elif int(inputs[0]) == 5:
             departamento= str(input('Escriba el depasrtamento: '))
             lista= controller.req5(catalog[cf.ARTWORKS],departamento)
-            print(lista)
+            costoso=controller.mas_costosa(lista)
+            antiguo=controller.mas_antigua(lista)
+            print('')
+            print('el total de obras es: ' + str(lt.size(lista)) )
+            print('')
+            print('Los mas antiguos ')
+            print('')
+            for i in range(0,5):
+                print('')
+                print('Titulo'+ lt.getElement( antiguo,i)['Title'])
+                print('Artistas'+ lt.getElement( antiguo,i)['Artistas'])
+                print('Clasificacion: '+ lt.getElement( antiguo,i)['Classification']) 
+                print('Fecha: '+ lt.getElement( antiguo,i)['Date']) 
+                print('Medio: '+ lt.getElement( antiguo,i)['Medium'])
+                if  lt.getElement(antiguo,i)['Dimensions'] != None and lt.getElement(antiguo,i)['Dimensions'] != '':
+                    print('Dimensiones: '+ lt.getElement(antiguo,i)['Dimensions']) 
+                elif lt.getElement(antiguo,i)['Dimensions'] == None or lt.getElement(antiguo,i)['Dimensions'] == '':
+                    print('Dimensiones: Unknown ') 
+                print('Costo: '+ str(lt.getElement( antiguo,i)['Costo']))
+            print('')
+            print('Los mas costosos')
+            for i in range(lt.size(costoso)-5,lt.size(costoso)):
+                print('')
+                print('Titulo'+ lt.getElement( costoso,i)['Title'])
+                print('Artistas'+ lt.getElement( costoso,i)['Artistas'])
+                print('Clasificacion: '+ lt.getElement( costoso,i)['Classification']) 
+                print('Fecha: '+ lt.getElement( costoso,i)['Date']) 
+                print('Medio: '+ lt.getElement( costoso,i)['Medium'])
+                if  lt.getElement(costoso,i)['Dimensions'] != None and lt.getElement(costoso,i)['Dimensions'] != '':
+                    print('Dimensiones: '+ lt.getElement(costoso,i)['Dimensions']) 
+                elif lt.getElement(costoso,i)['Dimensions'] == None or lt.getElement(costoso,i)['Dimensions'] == '':
+                    print('Dimensiones: Unknown ') 
+                print('Costo: '+ str(lt.getElement( costoso,i)['Costo']))
             
             
         elif int(inputs[0])== 7:
