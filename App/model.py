@@ -291,10 +291,14 @@ def req5(catalog,departamento):
             dicc['Artistas']= trabajos['ConstituentID']
             dicc['Classification']= trabajos['Classification']
             dicc['Date']=trabajos['Date']
-            dicc['Medio']= trabajos['Medium']
+            dicc['Medium']= trabajos['Medium']
             dicc['Dimensions']= trabajos['Dimensions']
             dicc['Costo']= costos
             lt.addLast(lista,dicc)
+            #sort by date
+            ms.sort(lista, cmp_artwork_date_created)
+            #sort by cost
+            ms.sort(lista, cmp_cost)
     print('---------------')
     print('El costo estimado es de: ' + str(contador_costo))
     print('')
@@ -302,6 +306,18 @@ def req5(catalog,departamento):
     return lista
 
 # Funciones de ordenamiento
+def cmp_cost(artw1, artw2):
+    cost1 = artw1['Costo']
+    cost2 = artw2['Costo']
+
+    if cost1 > cost2:
+        return 1
+    elif cost1 < cost2:
+        return -1
+    else:
+        return 0
+
+
 def cmp_artist_date(artist1, artist2):
     result = 0
     
@@ -322,6 +338,20 @@ def cmp_artwork_date(art1, art2):
     elif art1 < art2:
         result = -1
     return result
+
+
+def cmp_artwork_date_created(art1, art2):
+    result = 0
+    art1= art1['Date']
+    art2= art2['Date']
+
+    if art1 > art2:
+        result = 1
+    elif art1 < art2:
+        result = -1
+    return result
+
+
 
 def cmp_medio_date(med1,med2):
     result= 0
