@@ -36,6 +36,7 @@ from DISClib.DataStructures import mapentry as me
 from DISClib.DataStructures import linkedlistiterator as iter
 from DISClib.Algorithms.Sorting import shellsort as sa
 import datetime
+from statistics import mode
 assert cf
 
 ARTISTAS = "Artistas"
@@ -108,43 +109,6 @@ def req4(catalog):
 
     return nationalities
 
-def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
-    date1=datetime.date(año1,mes1,dia1)
-    date2=datetime.date(año2,mes2,dia2)
-    artworks=lt.newList(datastructure='ARRAY_LIST')
-    keys = mp.keySet(catalog)
-    i = iter.newIterator(keys)
-    contador = 0
-    while iter.hasNext(i):
-        key = iter.next(i)
-        trabajos = mp.get(catalog, key)['value']
-        lista1= trabajos['DateAcquired']
-        if lista1!= None and lista1!= '':
-            lista= lista1.split('-')
-            fecha= datetime.date(int(lista[0]),int(lista[1]),int(lista[2]))
-            if fecha > date1 and fecha < date2:
-                lt.addLast(artworks, trabajos)
-        purchase= trabajos['CreditLine']
-        if 'Purchase' in purchase:
-            contador += 1
-    ms.sort(artworks,cmp_artwork_date)
-    print('-------------------------')
-    print('Las obras en purchase son : '+ str(contador))
-    print('')
-    return artworks
-
-def req3(catalog, artista):
-    keys = mp.keySet(catalog[cf.ARTISTS])
-    #crea una tadlist
-    i = iter.newIterator(keys)
-    while iter.hasNext(i):
-        key = iter.next(i)
-        autores = mp.get(catalog[cf.ARTISTS], key)['value']
-        #me.getvalue(trabajos)
-        names= autores['DisplayName']
-        if artista in names:
-            id = autores['ConstituentID']
-    return id
 
 # Funciones para creacion de datos
 def lab_6(catalog,tipo,carga):
@@ -192,35 +156,6 @@ def req1(catalog, year1, year2):
 
     return artistas
 
-def req4(catalog):
-    # create a map. key: country, value: list
-    nationalities = mp.newMap(maptype = 'CHAINING')
-    nationalities_keys = lt.newList()
-    key_artworks = mp.keySet(catalog[cf.ARTWORKS])
-    i = iter.newIterator(key_artworks)
-    while iter.hasNext(i):
-        key = iter.next(i)
-        element = mp.get(catalog[cf.ARTWORKS], key)['value']
-        c_id = element['ConstituentID'].replace('[', '').replace(']', '').split(',')[0]
-        nationality = mp.get(catalog[cf.ARTISTS], c_id)['value']['Nationality']
-
-        #look for the nationality in the keys
-        found = False
-        j = iter.newIterator(nationalities_keys)
-        while iter.hasNext(j) and found != True:
-            current = iter.next(j)
-            if nationality == current:
-                found = True
-                lt.addLast(mp.get(nationalities, nationality)['value'], element)
-        
-        # key was not found in the map
-        if not found:
-            # add the new list
-            mp.put(nationalities, nationality, lt.newList())
-            lt.addLast(mp.get(nationalities, nationality)['value'] ,element)
-            lt.addLast(nationalities_keys, nationality)
-
-    return nationalities
 
 def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
     date1=datetime.date(año1,mes1,dia1)
@@ -251,6 +186,7 @@ def req3(catalog, artista):
     keys = mp.keySet(catalog[cf.ARTISTS])
     #crea una tadlist
     i = iter.newIterator(keys)
+    id=None
     while iter.hasNext(i):
         key = iter.next(i)
         autores = mp.get(catalog[cf.ARTISTS], key)['value']
@@ -258,12 +194,6 @@ def req3(catalog, artista):
         names= autores['DisplayName']
         if artista in names:
             id = autores['ConstituentID']
-    keys = mp.keySet(catalog[cf.ARTWORKS])
-    #crea una tadlist
-    i = iter.newIterator(keys)
-    while iter.hasNext(i):
-        key = iter.next(i)
-        autores= mp.get(catalog[cf.ARTWORKS], key)['value']
     return id
 
 def req3_1(catalog, id):
@@ -271,6 +201,8 @@ def req3_1(catalog, id):
     llave_medios=lt.newList()
     key_artworks = mp.keySet(catalog[cf.ARTWORKS])
     i = iter.newIterator(key_artworks)
+    contador= 0
+    lista=lt.newList(datastructure='ARRAY_LIST')
     while iter.hasNext(i):
         key = iter.next(i)
         element = mp.get(catalog[cf.ARTWORKS], key)['value']
@@ -278,8 +210,10 @@ def req3_1(catalog, id):
         # Si se imprime sin el .split hay una coma en el medio, por eso se divid
         obid = int(element['ObjectID'])
         if int(id) == int(id2):
+            contador+=1
             medio=mp.get(catalog[cf.ARTWORKS],obid)['value']
             medio= medio['Medium']
+            lt.addLast(lista,medio)
             found=False
             j = iter.newIterator(llave_medios)
             while iter.hasNext(j) and found != True:
@@ -291,7 +225,25 @@ def req3_1(catalog, id):
                 mp.put(medios,medio,lt.newList())
                 lt.addLast(mp.get(medios,medio)['value'], element)
                 lt.addLast(llave_medios,medio)
-    return medios
+    usada= mode(lista['elements'])
+    lista2=lt.newList(datastructure='ARRAY_LIST')
+    keys = mp.keySet(medios)
+    i = iter.newIterator(keys)
+    while iter.hasNext(i):
+        key = iter.next(i)
+        entry=mp.get(medios,key)['key']
+        if usada == entry:
+            trabajos=mp.get(medios,key)['value']
+            for k in lt.iterator(trabajos):
+                lt.addLast(lista2,k)
+    ms.sort(lista2,cmp_medio_date)
+    print('-------------------------------')
+    print('El total de obras del autor es: ' + str(contador))
+    print('')
+    print('la mas usada es: ' + usada)
+    return lista2
+            
+    
 
 # Funciones de ordenamiento
 def cmp_artist_date(artist1, artist2):
@@ -312,5 +264,18 @@ def cmp_artwork_date(art1, art2):
     if art1 > art2:
         result = 1
     elif art1 < art2:
+        result = -1
+    return result
+
+def cmp_medio_date(med1,med2):
+    result= 0
+    med1= med1['DateAcquired'].split('-')
+    med2= med2['DateAcquired'].split('-')
+    med1= datetime.date(int(med1[0]),int(med1[1]),int(med1[2]))
+    med2= datetime.date(int(med2[0]),int(med2[1]),int(med2[2]))
+
+    if med1 > med2:
+        result = 1
+    elif med1 < med2:
         result = -1
     return result

@@ -82,10 +82,8 @@ def req3(catalog,artista):
 def req3_1(catalog,id):
     return model.req3_1(catalog,id)
 
-
 def sort_nationalities(nationalities):
     return model.sort_nationalities(nationalities)
-
 
 def lab_6(catalog,tipo,carga):
     return model.lab_6(catalog,tipo,carga)

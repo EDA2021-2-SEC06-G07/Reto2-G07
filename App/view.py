@@ -106,6 +106,7 @@ if __name__ == "__main__":
             mes2 = int(input("Agregue el mes de la fecha 2: "))
             dia2 = int(input("Agregue el dia de la fecha 2: "))
             artworks= controller.req2(catalog[cf.ARTWORKS],año1,mes1,dia1,año2,mes2,dia2)
+            print(artworks)
             print("Las obras en esas fechas son: "+ str(lt.size(artworks)))
             print('')
             print('los primeros 3 son:')
@@ -137,8 +138,37 @@ if __name__ == "__main__":
             artista= str(input('Agregue el nombre del artista: '))
             id=(controller.req3(catalog,artista))
             medios=controller.req3_1(catalog,id)
+            print('')
             print('El ID del artista es: '+ str(id))
-            print('El total de medios es: '+ str(mp.size(medios)))
+            print('')
+            print('Las 3 primeras son')
+            print('')
+            for i in range(0,3):
+                print('ObjectID'+ lt.getElement(medios,i)['ObjectID'])
+                print('Titulo: '+ lt.getElement(medios,i)['Title'])
+                print('ID(s): '+ lt.getElement(medios,i)['DateAcquired']) 
+                print('Fecha: '+ lt.getElement(medios,i)['Medium']) 
+                print('Medio: '+ lt.getElement(medios,i)['Dimensions'])
+                if  lt.getElement(medios,i)['Dimensions'] != None and lt.getElement(medios,i)['Dimensions'] != '':
+                    print('Dimensiones: '+ lt.getElement(medios,i)['Dimensions']) 
+                elif lt.getElement(medios,i)['Dimensions'] == None or lt.getElement(medios,i)['Dimensions'] == '':
+                    print('Dimensiones: Unknown ')    
+                print('')
+            print('los ultimos 3 son:')
+            print('')
+            for i in range(lt.size(medios)-3,lt.size(medios)):
+                print('ObjectID'+ lt.getElement(medios,i)['ObjectID'])
+                print('Titulo: '+ lt.getElement(medios,i)['Title'])
+                print('Fecha: '+ lt.getElement(medios,i)['DateAcquired']) 
+                print('Medio: '+ lt.getElement(medios,i)['Medium']) 
+                print('Dimensiones: '+ lt.getElement(medios,i)['Dimensions'])
+                if  lt.getElement(medios,i)['Dimensions'] != None and lt.getElement(medios,i)['Dimensions'] != '':
+                    print('Dimensiones: '+ lt.getElement(medios,i)['Dimensions']) 
+                elif lt.getElement(medios,i)['Dimensions'] == None or lt.getElement(medios,i)['Dimensions'] == '':
+                    print('Dimensiones: Unknown ')    
+                print('')
+            
+            
         elif int(inputs[0]) == 4:
             nationalities = controller.req4(catalog)
             array = controller.sort_nationalities(nationalities)
