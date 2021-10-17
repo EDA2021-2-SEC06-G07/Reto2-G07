@@ -290,7 +290,7 @@ def req5(catalog,departamento):
             dicc['Title']= trabajos['Title']
             dicc['Artistas']= trabajos['ConstituentID']
             dicc['Classification']= trabajos['Classification']
-            dicc['DateAcquired']=trabajos['DateAcquired']
+            dicc['Date']=trabajos['Date']
             dicc['Medio']= trabajos['Medium']
             dicc['Dimensions']= trabajos['Dimensions']
             dicc['Costo']= costos
