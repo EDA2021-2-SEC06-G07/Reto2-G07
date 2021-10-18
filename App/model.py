@@ -133,6 +133,7 @@ def lab_6(catalog,tipo,carga):
                 found = True
                 lt.addLast(mp.get(nationalities, nationality)['value'], element)
         
+
         # key was not found in the map
         if not found:
             # add the new list
@@ -142,6 +143,8 @@ def lab_6(catalog,tipo,carga):
     stop_time= time.process_time()
     time_in_ms=(stop_time-start_time)*1000
     return time_in_ms
+
+
 # Funciones de consulta
 def req1(catalog, year1, year2):
     artistas = lt.newList(datastructure='ARRAY_LIST')
@@ -182,6 +185,7 @@ def req2(catalog,año1,mes1,dia1,año2,mes2,dia2):
     print('')
     return artworks
 
+
 def req3(catalog, artista):
     keys = mp.keySet(catalog[cf.ARTISTS])
     #crea una tadlist
@@ -195,6 +199,7 @@ def req3(catalog, artista):
         if artista in names:
             id = autores['ConstituentID']
     return id
+
 
 def req3_1(catalog, id):
     medios= mp.newMap(maptype='CHAINING')
@@ -365,3 +370,11 @@ def cmp_medio_date(med1,med2):
     elif med1 < med2:
         result = -1
     return result
+
+
+def get_artists(catalog, ids):
+    artists = lt.newList()
+    for id in ids:
+        artist = mp.get(catalog[cf.ARTISTS], id)
+        lt.addLast(artists,artist)
+    return artists

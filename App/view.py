@@ -172,10 +172,25 @@ if __name__ == "__main__":
         elif int(inputs[0]) == 4:
             nationalities = controller.req4(catalog)
             array = controller.sort_nationalities(nationalities)
-            for elem in array:
+            for i in range(0, 9):
+                elem = array[i]
                 key = elem['key']
                 size = elem['value']['size']
                 print(f'Amount of artworks in {key}: {size}')
+
+            mayor = array[0]['value']
+            i = iter.newIterator(mayor)
+            for i in range(0, 2):
+                if not iter.hasNext(i):
+                    break
+                artwork = iter.next(i)
+                ids = artwork['ConstituentID'].replace('[','').replace(']','').split(', ')
+                artists = controller.get_artists(catalog, ids)
+                print(f"Title: {artwork['Title']}")
+                print(f"    Title: {artists}")
+                print(f"    Date: {artwork['Date']}")
+                print(f"    Medium: {artwork['Medium']}")
+                print(f"    Dimensions: {artwork['Dimensions']}")
 
 
         elif int(inputs[0]) == 5:
