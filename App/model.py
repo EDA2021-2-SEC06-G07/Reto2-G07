@@ -198,6 +198,7 @@ def req3(catalog, artista):
         names= autores['DisplayName']
         if artista in names:
             id = autores['ConstituentID']
+            break
     return id
 
 
@@ -212,7 +213,7 @@ def req3_1(catalog, id):
         key = iter.next(i)
         element = mp.get(catalog[cf.ARTWORKS], key)['value']
         id2=int(element['ConstituentID'].replace('[', '').replace(']', '').split(',')[0])
-        # Si se imprime sin el .split hay una coma en el medio, por eso se divid
+        # Si se imprime sin el .split hay una coma en el medio, por eso se divide
         obid = int(element['ObjectID'])
         if int(id) == int(id2):
             contador+=1
@@ -300,16 +301,21 @@ def req5(catalog,departamento):
             dicc['Dimensions']= trabajos['Dimensions']
             dicc['Costo']= costos
             lt.addLast(lista,dicc)
-            #sort by date
-            ms.sort(lista, cmp_artwork_date_created)
-            #sort by cost
-            ms.sort(lista, cmp_cost)
     print('---------------')
     print('El costo estimado es de: ' + str(contador_costo))
     print('')
     print('El peso total es de: ' + str(contador_peso))
     return lista
 
+def mas_costosos(lista):
+    costoso = lista
+    ms.sort(costoso,cmp_cost)
+    return costoso
+
+def mas_antiguas(lista):
+    antiguas= lista
+    ms.sort(antiguas,cmp_artwork_date_created)
+    return antiguas
 # Funciones de ordenamiento
 def cmp_cost(artw1, artw2):
     cost1 = artw1['Costo']

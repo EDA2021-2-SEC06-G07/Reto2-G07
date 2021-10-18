@@ -84,6 +84,14 @@ def req3_1(catalog,id):
     return model.req3_1(catalog,id)
 
 
+def mas_costosa(lista):
+    return model.mas_costosos(lista)
+    
+
+def mas_antigua(lista):
+    return model.mas_antiguas(lista)
+
+
 def req5(catalog,departamento):
     return model.req5(catalog,departamento)
 
