@@ -375,8 +375,8 @@ def cmp_medio_date(med1,med2):
 def get_artists(catalog, ids):
     artists = lt.newList()
     for id in ids:
-        artist = mp.get(catalog[cf.ARTISTS], id)
-        lt.addLast(artists,artist)
+        artist = mp.get(catalog[cf.ARTISTS], id)['value']
+        lt.addLast(artists,artist['DisplayName'])
     return artists
 
 
@@ -393,18 +393,21 @@ def sort_nationalities(nationalities):
     it = iter.newIterator(mp.keySet(nationalities))
     i = 0
     while iter.hasNext(it):
-        key = iter.next(it)
-        elem = mp.get(nationalities, key)
-        size = elem['value']['size']
-        j = i
+        elem = mp.get(nationalities, iter.next(it))
         array[i] = elem
+        size = elem['value']['size']
+
+        j = i
         stop = False
         while j > 0 and not stop:
-            size_prev = array[j]['value']['size']
-            if size > size_prev:
-                array[j], array[j-1] = array[j-1], array[j]
+            if size > array[j-1]['value']['size']:
+                
+                temp = array[j]
+                array[j] = array[j-1]
+                array[j-1] = temp
             else:
                 stop = True
-            j += 1
+            j -= 1
         i += 1
     return array
+

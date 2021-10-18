@@ -177,21 +177,42 @@ if __name__ == "__main__":
                 key = elem['key']
                 size = elem['value']['size']
                 print(f'Amount of artworks in {key}: {size}')
+            print()
 
             mayor = array[0]['value']
-            i = iter.newIterator(mayor)
-            for i in range(0, 2):
-                if not iter.hasNext(i):
+            # print(mayor)
+            it = iter.newIterator(mayor)
+            for i in range(0, 3):
+                if not iter.hasNext(it):
                     break
-                artwork = iter.next(i)
+                artwork = iter.next(it)
                 ids = artwork['ConstituentID'].replace('[','').replace(']','').split(', ')
                 artists = controller.get_artists(catalog, ids)
                 print(f"Title: {artwork['Title']}")
-                print(f"    Title: {artists}")
+                print(f"    Artists:")
+                j = iter.newIterator(artists)
+                while iter.hasNext(j):
+                    artist = iter.next(j)
+                    print(f'       {artist}')
+                
                 print(f"    Date: {artwork['Date']}")
                 print(f"    Medium: {artwork['Medium']}")
                 print(f"    Dimensions: {artwork['Dimensions']}")
 
+            for i in range(mayor['size'] - 3, mayor['size']):
+                artwork = lt.getElement(mayor, i)
+                ids = artwork['ConstituentID'].replace('[','').replace(']','').split(', ')
+                artists = controller.get_artists(catalog, ids)
+                print(f"Title: {artwork['Title']}")
+                print(f"    Artists:")
+                j = iter.newIterator(artists)
+                while iter.hasNext(j):
+                    artist = iter.next(j)
+                    print(f'       {artist}')
+                
+                print(f"    Date: {artwork['Date']}")
+                print(f"    Medium: {artwork['Medium']}")
+                print(f"    Dimensions: {artwork['Dimensions']}")
 
         elif int(inputs[0]) == 5:
             departamento= str(input('Escriba el depasrtamento: '))
