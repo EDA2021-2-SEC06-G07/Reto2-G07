@@ -66,18 +66,6 @@ def add_artwork(map, artwork):
 def add_artist(map, artist):
     mp.put(map, artist['ConstituentID'], artist)
 # Funciones para agregar informacion al catalogo
-def req1(catalog, year1, year2):
-    artistas = lt.newList(datastructure='ARRAY_LIST')
-    keys = mp.keySet(catalog)
-    i = iter.newIterator(keys)
-    while iter.hasNext(i):
-        key = iter.next(i)
-        artist = mp.get(catalog, key)['value']
-        if artist != None and int(artist['BeginDate']) > year1 and int(artist['BeginDate']) < year2:
-            lt.addLast(artistas, artist)        
-    ms.sort(artistas, cmp_artist_date)
-
-    return artistas
 
 def req4(catalog):
     # create a map. key: country, value: list
@@ -316,6 +304,7 @@ def mas_antiguas(lista):
     antiguas= lista
     ms.sort(antiguas,cmp_artwork_date_created)
     return antiguas
+    
 # Funciones de ordenamiento
 def cmp_cost(artw1, artw2):
     cost1 = artw1['Costo']

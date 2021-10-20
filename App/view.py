@@ -478,10 +478,12 @@ if __name__ == "__main__":
             time5 = str(stop_watch.time_function(test_req5))
             
             print('\n\n')
-            print("time req1: " + time1)
-            print("time req2: " + time2)
-            print("time req3: " + time3)
-            print("time req4: " + time4)
-            print("time req5: " + time5)
+            print("time req1: " + time1+ 's')
+            print("time req2: " + time2+ 's')
+            print("time req3: " + time3+ 's')
+            print("time req4: " + time4+ 's')
+            print("time req5: " + time5+ 's')
         else:
             running = False
+
+
